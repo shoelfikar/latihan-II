@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./login.css">
+    <title>Register Form</title>
+</head>
+<body>
+    <div class="container">
+        <div class="register-form">
+            <h4>Register</h4>
+            <form action="">
+                <div class="form-control">
+                    <input type="text" placeholder="Nama Lengkap" id="fullname">
+                    <p>Nama lengkap tidak boleh kosong</p>
+                </div>
+                <div class="form-control">
+                    <input type="text" placeholder="Username">
+                    <p>Nama lengkap tidak boleh kosong</p>
+                </div>
+                <div class="form-control">
+                    <input type="password" placeholder="Password">
+                    <p>Nama lengkap tidak boleh kosong</p>
+                    <div class="password-icon">
+                        <img src="./img/hidden.png" alt="" width="15" data-show="false" >
+                        <img src="./img/view.png" alt="" width="15" class="hidden-password" >
+                    </div>
+                </div>
+                <div class="form-control">
+                    <input type="password" placeholder="Re-Password">
+                    <p>Nama lengkap tidak boleh kosong</p>
+                    <div class="password-icon">
+                        <img src="./img/hidden.png" alt="" width="15" data-show="false" >
+                        <img src="./img/view.png" alt="" width="15" class="hidden-password">
+                    </div>
+                </div>
+                <div class="form-control">
+                    <button>Register</button>
+                </div>
+            </form>
+            <div class="back-to-login">
+                <span>Back To <a href="#">Login</a></span>
+            </div>
+            <div class="user-profil">
+                <img src="./img/man.png" alt="Profil User" width="90">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let button = document.querySelector('.form-control button')
+        let input = document.querySelectorAll('.form-control input')
+        let fullname = document.getElementById("fullname")
+        let showPassword = document.getElementsByClassName('password-icon')
+
+
+        let validasi = 0
+        let textValidation = 'tidak boleh kosong!'
+
+        let storage = localStorage.clear()
+
+        button.addEventListener('click', function(e){
+            e.preventDefault()
+            
+            for(let i=0; i < input.length; i++){
+                if(input[i].value == ""){
+                    let validation = input[i].getAttribute("placeholder")
+                    input[i].nextElementSibling.classList.add("validation")
+                    input[i].nextElementSibling.innerHTML = `${validation} ${textValidation}`
+                }else{
+                    validasi++
+                    input[i].nextElementSibling.classList.remove("validation") 
+                }
+            }
+
+            console.log(`validasi: ${validasi}, input: ${input.length}`)
+
+            if(validasi != input.length){
+                validasi = 0
+                return 
+            }
+
+
+            localStorage.setItem("name", fullname.value)
+
+            alert('Selamat Registrasi Anda Berhasil!')
+
+            location.href = "http://127.0.0.1:5500/home.html"
+
+        })
+
+        for(let i=0; i < showPassword.length; i++){
+            showPassword[i].addEventListener("click", function(e){
+                let show = this.children[0].getAttribute("data-show")
+                if(show == "false"){
+                    this.parentElement.children[0].setAttribute("type", "text")
+                    this.children[0].setAttribute("data-show", "true")
+                    this.children[0].classList.add("hidden-password")
+                    this.children[1].classList.remove("hidden-password")
+                }else{
+                    this.parentElement.children[0].setAttribute("type", "password")
+                    this.children[0].setAttribute("data-show", "false")
+                    this.children[0].classList.remove("hidden-password")
+                    this.children[1].classList.add("hidden-password")
+                }
+
+            })
+        }
+    </script>
+</body>
+</html>
